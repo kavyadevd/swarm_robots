@@ -9,28 +9,32 @@
  *
  */
 
-
-#ifndef INCLUDE_SWARM_ROBOTS_FORWARD_KINEMATICS_H_        //  NOLINT
+#ifndef INCLUDE_SWARM_ROBOTS_FORWARD_KINEMATICS_H_  //  NOLINT
 #define INCLUDE_SWARM_ROBOTS_FORWARD_KINEMATICS_H_
 
+#include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-#include <geometry_msgs/Twist.h>
+
 #include <string>
-#include "path_planner.h"
-#include "state.h"        //  NOLINT
+
+#include "geometry_msgs/Pose.h"
+#include "../include/swarm_robots/path_planner.h"
+#include "state.h"  //  NOLINT
+#include "tf/transform_broadcaster.h"
 
 using std::string;
 
 class ForwardKinematics {
-    public:        //  NOLINT
-        ForwardKinematics();
-        State PerformFK(State velocity);
+   public:  //  NOLINT
+    ForwardKinematics();
+    State PerformFK(State velocity);
+    bool MoveForward(geometry_msgs::Twist *robot_vel);
+    bool Stop(geometry_msgs::Twist *robot_vel);
 
-    private:        //  NOLINT
-        State velocity_;
-        double kDriveVelocityLimit;
-        double kSteerVelocityLimit;
-
+   private:  //  NOLINT
+    State velocity_;
+    double kDriveVelocityLimit;
+    double kSteerVelocityLimit;
 };
 #endif  // INCLUDE_SWARM_ROBOTS_FORWARD_KINEMATICS_H_        //  NOLINT
